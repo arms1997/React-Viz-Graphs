@@ -20,8 +20,25 @@ export default function LineAreaBubble(props) {
   const [hoveredNode, setHoveredNode] = useState({});
   const [newsAreaHover, setNewsAreaHover] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [currentHint, setCurrentHint] = useState([]);
 
   const { alphaData, areaData } = props;
+
+  const lessThan5 = alphaData.filter((data) => data.x <= 5);
+  const lessThan15 = alphaData.filter((data) => data.x <= 15 && data.x >= 10);
+
+  const newAreaData = [lessThan5, lessThan15];
+
+  const areaSeries = newAreaData.map((data, index) => {
+    return (
+      <AreaSeries
+        opacity={0.5}
+        data={data}
+        animation
+        onSeriesClick={(event) => setCurrentHint(index)}
+      />
+    );
+  });
 
   return (
     <div>
@@ -42,12 +59,12 @@ export default function LineAreaBubble(props) {
           opacity={newsAreaHover ? 0.6 : 0.4}
           onSeriesMouseOver={() => setNewsAreaHover(true)}
           onSeriesMouseOut={() => {
-            // setShowBubble(false);
             setNewsAreaHover(false);
           }}
           onSeriesClick={() => setShowBubble(!showBubble)}
           animation
         />
+        {areaSeries}
         <MarkSeries data={[hoveredNode]} />
         {newsAreaHover && (
           <Hint
