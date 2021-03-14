@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 //Graph Import
@@ -7,7 +6,7 @@ import Graph from "./components/Graph";
 function App() {
   return (
     <div className="App">
-      <Graph />
+      <Graph lineWithBubble />
     </div>
   );
 }
