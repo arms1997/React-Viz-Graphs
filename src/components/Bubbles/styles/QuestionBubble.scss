@@ -1,0 +1,17 @@
+.bubble {
+  &__item {
+    border: 1px solid grey;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    font-size: large;
+    align-items: center;
+    justify-content: center;
+
+    &-image {
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+}
