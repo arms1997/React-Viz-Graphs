@@ -13,23 +13,24 @@ import {
 } from "react-vis";
 import "../../node_modules/react-vis/dist/style.css";
 
-import { parser, xAxisParser } from "../samples/parser";
-import DATA from "../samples/alpha_vantage";
+import NewsBubble from "./Bubbles/NewsBubble";
+import QuestionBubble from "./Bubbles/QuestionBubble";
 
 export default function LineAreaBubble(props) {
   const [hoveredNode, setHoveredNode] = useState({});
   const [newsAreaHover, setNewsAreaHover] = useState(false);
+  const [showBubble, setShowBubble] = useState(false);
 
-  const alphaData = parser({ ...DATA });
-
-  const areaData = alphaData.filter((data) => data.x > 50 && data.x < 64);
+  const { alphaData, areaData } = props;
 
   return (
     <div>
       <FlexibleWidthXYPlot height={500}>
         <VerticalGridLines />
         <HorizontalGridLines />
-        <XAxis tickFormat={(v) => xAxisParser(v, DATA)} />
+        <XAxis
+        // tickFormat={(v) => xAxisParser(v, DATA)}
+        />
         <YAxis />
         <LineSeries
           data={alphaData}
@@ -38,14 +39,27 @@ export default function LineAreaBubble(props) {
         />
         <AreaSeries
           data={areaData}
-          opacity={0.4}
+          opacity={newsAreaHover ? 0.6 : 0.4}
           onSeriesMouseOver={() => setNewsAreaHover(true)}
-          onSeriesMouseOut={() => setNewsAreaHover(false)}
+          onSeriesMouseOut={() => {
+            // setShowBubble(false);
+            setNewsAreaHover(false);
+          }}
+          onSeriesClick={() => setShowBubble(!showBubble)}
           animation
         />
         <MarkSeries data={[hoveredNode]} />
         {newsAreaHover && (
-          <Hint value={areaData[Math.ceil(areaData.length / 2)]} />
+          <Hint
+            align={{ vertical: "top", horizontal: "left" }}
+            value={areaData[Math.ceil(areaData.length / 2)]}
+          >
+            {showBubble ? (
+              <NewsBubble title="TSLA in a Bind" />
+            ) : (
+              <QuestionBubble />
+            )}
+          </Hint>
         )}
       </FlexibleWidthXYPlot>
     </div>
