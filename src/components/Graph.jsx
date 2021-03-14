@@ -1,4 +1,5 @@
 import LineAreaBubble from "./LineAreaBubble";
+import LineWithDynamicBubble from "./LineWithDynamicBubbles";
 
 import { parser, xAxisParser } from "../samples/parser";
 import DATA from "../samples/alpha_vantage";
@@ -12,6 +13,9 @@ export default function Graph(props) {
     <div>
       {props.lineWithBubble && (
         <LineAreaBubble areaData={areaData} alphaData={alphaData} />
+      )}
+      {props.lineWithDynamicBubble && (
+        <LineWithDynamicBubble alphaData={alphaData} />
       )}
     </div>
   );
