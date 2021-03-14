@@ -1,5 +1,5 @@
-import LineGraphBubble from "./line-graph-with-bubble";
+import LineAreaBubble from "./LineAreaBubble";
 
 export default function Graph(props) {
-  return <div>{props.lineWithBubble && <LineGraphBubble />}</div>;
+  return <div>{props.lineWithBubble && <LineAreaBubble />}</div>;
 }
